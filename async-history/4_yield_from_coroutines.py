@@ -43,8 +43,8 @@ print(x.send(10))
 def yield_from_coroutine():
     yield from subcoroutine()
 
-x = coroutine()
-next(x)
+x = yield_from_coroutine()
+print(next(x))
 print(x.send(10))
 # print(x.send(20))
 
@@ -61,9 +61,9 @@ x = returning_coroutine()
 next(x)
 # next(x) # StopIteration
 
-def sum(max):
+def sum(maximum):
     total = 0
-    for i in range(max):
+    for i in range(maximum):
         total += i
         yield total
     return total
@@ -71,8 +71,8 @@ def sum(max):
     # e.value = 10
     # raise e
 
-def coroutine(x):
-    total = yield from sum(x)
+def coroutine(maximum):
+    total = yield from sum(maximum)
     print(f"total: {total}")
 
 coro = coroutine(10)

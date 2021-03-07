@@ -36,12 +36,14 @@ async def handle_url(url):
     html = await fetch_url(url)
     extracted_data[url] = await analyze_sentiment(html)
 
+# first way, gathering coroutines
 async def main():
     t = time.perf_counter()
     await asyncio.gather(*(handle_url(url) for url in urls))
     print("> extracted data:", extracted_data)
     print(f"time elapsed: {time.perf_counter() - t:.2f}s")
 
+# second way, just drop event loop when something is finished
 async def main_race():
     t = time.perf_counter()
     await asyncio.wait([handle_url(url) for url in urls],
@@ -49,6 +51,7 @@ async def main_race():
     print("> extracted data:", extracted_data)
     print(f"time elapsed: {time.perf_counter() - t:.2f}s")
 
+# Its just like syncronous programming..
 async def main_sequential():
     t = time.perf_counter()
     for url in urls:
@@ -56,12 +59,15 @@ async def main_sequential():
     print("> extracted data:", extracted_data)
     print(f"time elapsed: {time.perf_counter() - t:.2f}s")
 
+# it is similar to main(), j
 async def main_concurrent():
     t = time.perf_counter()
     tasks = [asyncio.create_task(handle_url(url))
              for url in urls]
-    for task in tasks:
-        await task
+    # to show that the loop is initiated when the task is started
+    # for task in tasks:
+    #     await task
+    await asyncio.wait(tasks)
     print("> extracted data:", extracted_data)
     print(f"time elapsed: {time.perf_counter() - t:.2f}s")
 

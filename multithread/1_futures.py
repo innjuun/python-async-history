@@ -2,9 +2,11 @@ from concurrent import futures
 import requests
 import urllib.request
 
-URLS = ['http://www.foxnews.com/',
-        'http://www.cnn.com/',
-        'http://some-made-up-domain.com/']
+URLS = [
+    'http://www.foxnews.com/',
+    'http://www.cnn.com/',
+    'http://some-made-up-domain.com/'
+]
 
 def load_url(url, timeout):
     return requests.get(url).text

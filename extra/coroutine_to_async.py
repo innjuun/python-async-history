@@ -19,7 +19,7 @@
 # def run(coros):
 #     coros = list(coros)
 
-#     while coros:
+#     while coros:          # kind of event loop
 #         for coro in list(coros):
 #             try:
 #                 coro.send(None)
@@ -57,7 +57,7 @@ async def coro2():
 def run(coros):
     coros = list(coros)
 
-    while coros:
+    while coros:           # kind of event loop
         for coro in list(coros):
             try:
                 coro.send(None)
